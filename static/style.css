@@ -424,6 +424,7 @@ body.panel-open .backdrop, body.nav-open .backdrop { opacity: 1; pointer-events:
 .question legend { display: flex; gap: 10px; padding: 0; margin-bottom: 10px; font-weight: 500; }
 .q-no { display: grid; place-items: center; width: 24px; height: 24px; flex: none; margin-top: 2px; border-radius: 7px; background: var(--surface-2); font-size: 13px; font-weight: 700; color: var(--ink-2); }
 .option {
+  position: relative;
   display: flex; align-items: center; gap: 12px; margin: 6px 0 0 34px; padding: 9px 12px;
   border: 1px solid var(--line); border-radius: 10px; cursor: pointer; font-size: 14.5px;
 }
