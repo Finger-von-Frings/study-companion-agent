@@ -1,0 +1,302 @@
+[
+ {
+  "source_id": "01-tcp-udp",
+  "question": "以下哪一项属于 TCP 提供的服务？",
+  "options": [
+   "可靠、有序的字节流",
+   "绝不发生网络丢包",
+   "自动保留应用消息边界",
+   "不需要建立连接"
+  ],
+  "answer": 0,
+  "explanation": "TCP 提供可靠、有序的字节流；网络仍可能丢包，TCP 使用重传等机制恢复，也不保留消息边界。"
+ },
+ {
+  "source_id": "02-handshake",
+  "question": "TCP 三次握手中，服务端对客户端 SYN 的典型响应是什么？",
+  "options": [
+   "仅发送 FIN",
+   "发送 SYN+ACK",
+   "仅发送 RST",
+   "发送 HTTP 请求"
+  ],
+  "answer": 1,
+  "explanation": "服务端发送 SYN+ACK，同时给出自己的初始序号并确认客户端的 SYN。"
+ },
+ {
+  "source_id": "03-dns",
+  "question": "缓存有效且命中时，DNS 解析通常可以怎样处理？",
+  "options": [
+   "直接利用缓存结果",
+   "必须查询所有根服务器",
+   "必须关闭 TCP",
+   "无需任何资源记录"
+  ],
+  "answer": 0,
+  "explanation": "有效缓存能减少查询次数；不需要每次从根服务器开始查询。"
+ },
+ {
+  "source_id": "04-http",
+  "question": "以下关于 HTTPS 的说法正确的是？",
+  "options": [
+   "保证网站内容绝对可信",
+   "完全不需要身份认证",
+   "借助 TLS 提供加密和完整性保护",
+   "保证服务器永不被攻击"
+  ],
+  "answer": 2,
+  "explanation": "TLS 提供传输安全能力，但不保证网站内容和应用本身没有风险。"
+ },
+ {
+  "source_id": "05-subnet",
+  "question": "普通 /26 IPv4 广播子网通常有多少个可用主机地址？",
+  "options": [
+   "64",
+   "256",
+   "62",
+   "254"
+  ],
+  "answer": 2,
+  "explanation": "/26 留有 6 个主机位，共 64 个地址，通常扣除网络地址和广播地址，剩余 62 个。"
+ },
+ {
+  "source_id": "06-layers",
+  "question": "IP 主要属于五层教学模型的哪一层？",
+  "options": [
+   "应用层",
+   "传输层",
+   "物理层",
+   "网络层"
+  ],
+  "answer": 3,
+  "explanation": "IP 负责网络层寻址与转发。"
+ },
+ {
+  "source_id": "02-handshake",
+  "question": "客户端 SYN 的序号为 100，服务端对应的确认号通常是多少？",
+  "options": [
+   "99",
+   "100",
+   "101",
+   "200"
+  ],
+  "answer": 2,
+  "explanation": "SYN 消耗一个序号，因此确认号为 100+1=101。"
+ },
+ {
+  "source_id": "01-tcp-udp",
+  "question": "UDP 协议本身不提供以下哪项保证？",
+  "options": [
+   "数据报边界",
+   "传输层端口",
+   "可靠有序交付",
+   "数据报长度信息"
+  ],
+  "answer": 2,
+  "explanation": "UDP 本身不保证可靠交付和顺序，应用可以在其上实现自己的机制。"
+ },
+ {
+  "source_id": "ds-01-complexity",
+  "question": "二分查找的时间复杂度是多少？",
+  "options": [
+   "O(1)",
+   "O(log n)",
+   "O(n)",
+   "O(n²)"
+  ],
+  "answer": 1,
+  "explanation": "二分查找每次把查找范围减半，最多约 log₂n 次，所以是 O(log n)。"
+ },
+ {
+  "source_id": "ds-01-complexity",
+  "question": "3n² + 5n + 2 用大 O 记号表示为？",
+  "options": [
+   "O(3n²)",
+   "O(n)",
+   "O(n²)",
+   "O(n² + n)"
+  ],
+  "answer": 2,
+  "explanation": "大 O 忽略常数系数和低阶项，只保留最高阶 n²。"
+ },
+ {
+  "source_id": "ds-02-array-list",
+  "question": "数组相比链表最突出的优势是？",
+  "options": [
+   "中间插入总是更快",
+   "按下标 O(1) 随机访问",
+   "不需要连续内存",
+   "删除元素无需移动"
+  ],
+  "answer": 1,
+  "explanation": "数组元素在连续内存中，可以按下标直接计算地址，O(1) 随机访问；链表按位置查找需要 O(n)。"
+ },
+ {
+  "source_id": "ds-03-stack-queue",
+  "question": "括号匹配检查最常使用哪种数据结构？",
+  "options": [
+   "队列",
+   "栈",
+   "哈希表",
+   "堆"
+  ],
+  "answer": 1,
+  "explanation": "遇到左括号入栈，遇到右括号与栈顶匹配并出栈，利用的是栈的后进先出特性。"
+ },
+ {
+  "source_id": "ds-03-stack-queue",
+  "question": "采用“空出一个位置”约定的循环队列，队满条件是？",
+  "options": [
+   "front == rear",
+   "rear == capacity",
+   "(rear + 1) % capacity == front",
+   "front == 0"
+  ],
+  "answer": 2,
+  "explanation": "空出一个位置后，front == rear 表示队空，(rear + 1) % capacity == front 表示队满。"
+ },
+ {
+  "source_id": "ds-04-binary-tree",
+  "question": "对二叉搜索树进行哪种遍历会得到递增序列？",
+  "options": [
+   "前序遍历",
+   "中序遍历",
+   "后序遍历",
+   "层序遍历"
+  ],
+  "answer": 1,
+  "explanation": "BST 左子树小于根、右子树大于根，中序遍历按“左、根、右”访问，结果递增。"
+ },
+ {
+  "source_id": "ds-04-binary-tree",
+  "question": "层序遍历二叉树通常借助哪种结构？",
+  "options": [
+   "栈",
+   "队列",
+   "链表反转",
+   "递归调用栈"
+  ],
+  "answer": 1,
+  "explanation": "层序遍历按层从上到下访问，先访问的结点其子结点也先访问，符合队列的先进先出。"
+ },
+ {
+  "source_id": "ds-05-sorting",
+  "question": "下列排序算法中，哪一个是稳定的？",
+  "options": [
+   "快速排序",
+   "堆排序",
+   "归并排序",
+   "选择排序"
+  ],
+  "answer": 2,
+  "explanation": "归并排序在合并时可以让相等元素保持原有顺序，是稳定排序；快速排序和堆排序不稳定。"
+ },
+ {
+  "source_id": "ds-05-sorting",
+  "question": "快速排序的最坏时间复杂度是？",
+  "options": [
+   "O(n)",
+   "O(n log n)",
+   "O(n²)",
+   "O(log n)"
+  ],
+  "answer": 2,
+  "explanation": "当每次划分都极不均衡（例如基准总取到最值）时，快速排序退化为 O(n²)。"
+ },
+ {
+  "source_id": "os-01-process",
+  "question": "操作系统进行资源分配的基本单位是？",
+  "options": [
+   "线程",
+   "进程",
+   "页",
+   "指令"
+  ],
+  "answer": 1,
+  "explanation": "进程是资源分配的基本单位，线程是 CPU 调度的基本单位。"
+ },
+ {
+  "source_id": "os-01-process",
+  "question": "进程等待的 I/O 完成后，会进入哪个状态？",
+  "options": [
+   "运行",
+   "就绪",
+   "阻塞",
+   "终止"
+  ],
+  "answer": 1,
+  "explanation": "I/O 完成后进程回到就绪状态，等待调度程序分配 CPU，而不是直接进入运行。"
+ },
+ {
+  "source_id": "os-02-scheduling",
+  "question": "时间片轮转调度中，时间片设得过大，会怎样？",
+  "options": [
+   "退化为先来先服务",
+   "上下文切换大幅增加",
+   "一定出现死锁",
+   "变成短作业优先"
+  ],
+  "answer": 0,
+  "explanation": "时间片足够大时，每个进程都能在一个时间片内运行完，效果等同于 FCFS。"
+ },
+ {
+  "source_id": "os-02-scheduling",
+  "question": "某进程 0 时刻到达，运行 4 个单位，在第 10 时刻完成。它的等待时间是？",
+  "options": [
+   "4",
+   "6",
+   "10",
+   "14"
+  ],
+  "answer": 1,
+  "explanation": "周转时间 = 10 − 0 = 10，等待时间 = 周转时间 − 运行时间 = 10 − 4 = 6。"
+ },
+ {
+  "source_id": "os-03-memory",
+  "question": "页大小为 4 KB 时，逻辑地址中页内偏移占多少位？",
+  "options": [
+   "10 位",
+   "12 位",
+   "16 位",
+   "32 位"
+  ],
+  "answer": 1,
+  "explanation": "4 KB = 2¹² 字节，所以低 12 位是页内偏移。"
+ },
+ {
+  "source_id": "os-03-memory",
+  "question": "哪种页面置换算法可能出现 Belady 异常？",
+  "options": [
+   "LRU",
+   "OPT",
+   "FIFO",
+   "以上都不会"
+  ],
+  "answer": 2,
+  "explanation": "FIFO 可能出现分配页框增多、缺页次数反而增加的 Belady 异常；LRU 和 OPT 不会。"
+ },
+ {
+  "source_id": "os-04-deadlock",
+  "question": "让所有线程按统一顺序申请锁，破坏的是死锁的哪个必要条件？",
+  "options": [
+   "互斥",
+   "占有并等待",
+   "不可抢占",
+   "循环等待"
+  ],
+  "answer": 3,
+  "explanation": "按统一顺序申请资源，就不可能形成资源等待的环路，从而破坏循环等待条件。"
+ },
+ {
+  "source_id": "os-04-deadlock",
+  "question": "银行家算法属于哪一类死锁处理方法？",
+  "options": [
+   "死锁预防",
+   "死锁避免",
+   "死锁检测",
+   "死锁解除"
+  ],
+  "answer": 1,
+  "explanation": "银行家算法在分配资源前检查系统是否仍处于安全状态，属于死锁避免。"
+ }
+]

@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>学伴 · 课程学习工作台</title>
+<script>
+  // Apply the saved theme before first paint to avoid a flash.
+  try { const t = localStorage.getItem('study-theme'); if (t) document.documentElement.dataset.theme = t; } catch {}
+</script>
+<link rel="stylesheet" href="/style.css">
+<script src="/vendor/marked.js" defer></script>
+<script src="/vendor/purify.js" defer></script>
+<script src="/vendor/highlight.js" defer></script>
+<script src="/app.js" defer></script>
+</head>
+<body data-view="study">
+<div class="app">
+
+  <!-- 左侧：导航与历史 -->
+  <aside id="sidebar" class="sidebar" aria-label="导航">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">学</span>
+      <span class="brand-text"><strong>学伴</strong><small>课程学习助手</small></span>
+    </a>
+    <button id="new-chat" class="btn btn-outline btn-block lock" type="button"><span data-icon="plus"></span>开始新的学习</button>
+    <nav class="nav" aria-label="主导航">
+      <button class="nav-item active" type="button" data-view="study"><span data-icon="chat"></span><span>学习工作台</span></button>
+      <button class="nav-item" type="button" data-view="library"><span data-icon="book"></span><span>我的资料库</span><span id="nav-docs" class="nav-count"></span></button>
+      <button class="nav-item" type="button" data-view="review"><span data-icon="review"></span><span>错题与进度</span><span id="nav-due" class="nav-count due"></span></button>
+    </nav>
+    <div class="history-wrap">
+      <h2 class="side-title">最近的学习</h2>
+      <div id="history" class="history"><p class="side-empty">正在读取…</p></div>
+    </div>
+    <div class="sidebar-foot">
+      <div class="status"><span id="mode-dot" class="status-dot"></span><span><strong id="mode-status">正在连接</strong><small id="mode-detail">本地学习工作台</small></span></div>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="切换深色模式" title="切换深色模式"><span id="theme-icon"></span></button>
+    </div>
+  </aside>
+
+  <!-- 中间：主内容 -->
+  <main class="main">
+    <header class="topbar">
+      <button id="menu-toggle" class="icon-btn only-mobile" type="button" aria-label="打开导航"><span data-icon="menu"></span></button>
+      <h1 id="page-title">学习工作台</h1>
+      <button id="panel-toggle" class="btn btn-ghost btn-sm" type="button"><span data-icon="panel"></span><span>回答依据</span></button>
+    </header>
+    <div id="notice" class="notice" role="status" hidden></div>
+
+    <section id="study-view" class="view study">
+      <div id="chat-scroll" class="chat-scroll">
+        <div class="chat-column">
+          <section id="welcome" class="welcome" hidden>
+            <div class="hero">
+              <div class="hero-text">
+                <p id="greeting" class="greeting">你好</p>
+                <h2>今天想弄懂什么？</h2>
+                <p>基于课程资料回答，点击引用可在右侧核对原文。AI 回答仍需核实。</p>
+              </div>
+              <div id="review-card" class="review-card" aria-live="polite"></div>
+            </div>
+            <dl id="welcome-stats" class="stat-row"></dl>
+            <div class="section-head">
+              <h3>按知识结构浏览</h3>
+              <span>选一个知识点，问题会填进输入框</span>
+            </div>
+            <div id="course-tabs" class="course-tabs" role="group" aria-label="选择课程"></div>
+            <div id="course-map" class="course-map"></div>
+            <div class="section-head"><h3>或者从这些问题开始</h3></div>
+            <div id="suggestions" class="suggestions"></div>
+          </section>
+          <div id="chat" class="chat" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="composer-dock">
+        <form id="composer" class="composer">
+          <label class="sr-only" for="question">输入学习问题</label>
+          <textarea id="question" rows="1" maxlength="2000" placeholder="问一个问题，或者说：围绕这个知识点出几道题"></textarea>
+          <div class="composer-bar">
+            <div class="segmented" role="radiogroup" aria-label="学习方式">
+              <label><input class="lock" type="radio" name="mode" value="explain" checked><span>直接讲解</span></label>
+              <label><input class="lock" type="radio" name="mode" value="guide"><span>引导学习</span></label>
+              <label><input class="lock" type="radio" name="mode" value="test"><span>自我检测</span></label>
+            </div>
+            <label class="scope"><span class="sr-only">资料范围</span><select id="document-scope" class="lock"></select></label>
+            <button id="send" class="send-btn" type="submit" aria-label="发送问题"><span id="send-label">发送</span><span data-icon="send"></span></button>
+          </div>
+        </form>
+        <p class="composer-note"><span id="mode-help"></span> <span id="footnote"></span></p>
+      </div>
+    </section>
+
+    <section id="library-view" class="view page" hidden>
+      <div class="page-inner">
+        <header class="page-head">
+          <h2>我的资料库</h2>
+          <p>内置三门课程的笔记，也可以加入自己的课堂笔记。提问时，学伴会从这里检索依据。</p>
+        </header>
+        <form id="upload-form" class="upload">
+          <input id="upload-file" class="sr-only" type="file" accept=".md,.txt">
+          <label id="dropzone" class="dropzone" for="upload-file">
+            <span class="dropzone-icon" data-icon="upload"></span>
+            <span class="dropzone-text">
+              <strong>把 .md 或 .txt 笔记拖到这里，或点击选择文件</strong>
+              <small>UTF-8 编码，单个文件不超过 200 KB，最多 30 份。资料保存在本机；在线提问时，相关片段会发送给 DeepSeek。</small>
+            </span>
+            <span id="file-name" class="file-name">未选择文件</span>
+          </label>
+          <button id="upload-button" class="btn btn-primary" type="submit">上传资料</button>
+          <p id="upload-status" class="upload-status" role="status"></p>
+        </form>
+        <div class="toolbar">
+          <div id="library-filters" class="chips" role="group" aria-label="按课程筛选"></div>
+          <input id="library-search" class="search" type="search" placeholder="搜索资料名称" aria-label="搜索资料名称">
+        </div>
+        <div id="library-grid" class="doc-grid"></div>
+      </div>
+    </section>
+
+    <section id="review-view" class="view page" hidden>
+      <div class="page-inner">
+        <header class="page-head">
+          <h2>错题与进度</h2>
+          <p>答错的题会自动收录。到期时重做一遍；答对后，按 1、3、7、14、30 天的间隔再复习。</p>
+        </header>
+        <dl id="review-stats" class="stat-row"></dl>
+        <div class="review-layout">
+          <div>
+            <div class="toolbar">
+              <div class="chips" role="group" aria-label="错题筛选">
+                <button id="tab-due" class="chip selected" type="button">今日待复习</button>
+                <button id="tab-later" class="chip" type="button">待巩固</button>
+              </div>
+              <button id="retry-all" class="btn btn-primary" type="button">复习到期题（最多 5 题）</button>
+            </div>
+            <div id="mistake-list" class="mistake-list"></div>
+          </div>
+          <aside class="topic-card">
+            <h3>知识点练习情况</h3>
+            <p class="muted">按已提交的题目统计，包含重练。</p>
+            <div id="topic-list"></div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 右侧：回答依据 / 资料原文 -->
+  <aside id="panel" class="panel" aria-label="回答依据与资料原文">
+    <header class="panel-head">
+      <button id="panel-back" class="icon-btn" type="button" aria-label="返回依据列表" hidden><span data-icon="back"></span></button>
+      <h2 id="panel-title">回答依据</h2>
+      <button id="panel-close" class="icon-btn" type="button" aria-label="收起面板"><span data-icon="close"></span></button>
+    </header>
+    <div id="panel-scroll" class="panel-scroll">
+      <div id="panel-sources"></div>
+      <article id="panel-doc" class="doc-reader" hidden>
+        <p id="doc-meta" class="doc-kind"></p>
+        <h3 id="doc-title"></h3>
+        <p id="doc-hint" class="muted"></p>
+        <div id="doc-content" class="doc-content"></div>
+      </article>
+    </div>
+  </aside>
+  <div id="backdrop" class="backdrop"></div>
+</div>
+</body>
+</html>

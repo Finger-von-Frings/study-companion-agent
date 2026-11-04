@@ -1,0 +1,16 @@
+{
+  "order": 1,
+  "name": "计算机网络",
+  "description": "从上往下：数据从应用发出，逐层封装后送到网络。",
+  "overview": "06-layers",
+  "groups": [
+    {"name": "应用层", "hint": "网址如何变成网页", "ids": ["03-dns", "04-http"]},
+    {"name": "传输层", "hint": "数据如何可靠送达", "ids": ["01-tcp-udp", "02-handshake"]},
+    {"name": "网络层", "hint": "地址与子网", "ids": ["05-subnet"]}
+  ],
+  "suggestions": [
+    {"tag": "理解概念", "title": "TCP 与 UDP，有什么不同？", "hint": "连接、可靠性与使用场景", "prompt": "TCP 和 UDP 有什么区别？请用表格对比。"},
+    {"tag": "探索原理", "title": "一个网址，如何找到服务器？", "hint": "把 DNS 的工作过程串起来", "prompt": "请解释 DNS 如何解析域名，并举一个例子。"},
+    {"tag": "检验所学", "title": "三次握手，真的懂了吗？", "hint": "做 3 道题，错题自动收录", "prompt": "围绕 TCP 三次握手出 3 道选择题"}
+  ]
+}
